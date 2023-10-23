@@ -11,8 +11,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={landingPage} />
-          <Route path="/auth/login" Component={login} />
-          <Route path="/auth/register" Component={register} />
+          <Route path="/login" Component={login} />
+          <Route path="/register" Component={register} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
