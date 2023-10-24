@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 function login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submit = async (e) => {
+    console.log("isaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam");
+    e.preventDefault();
+    await fetch("http://localhost:3000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }).then(function (response) {
+      if (!response.ok) {
+        console.log(!response.ok);
+      } else {
+        window.location.href = "/";
+      }
+    });
+  };
   return (
     <React.Fragment>
       <div className="flex flex-col items-center justify-center px-3 py-3 my-7">
@@ -15,7 +38,7 @@ function login() {
             <h1 className="text-4xl text-purple-400 font-bold">
               Login to your account
             </h1>
-            <form>
+            <form onSubmit={submit}>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
                   email
@@ -25,6 +48,7 @@ function login() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="name@Example.com"
                   required
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -36,6 +60,7 @@ function login() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Password"
                   required
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <button
