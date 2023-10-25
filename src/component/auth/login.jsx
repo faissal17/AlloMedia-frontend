@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 function login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +19,12 @@ function login() {
       }),
     }).then(function (response) {
       if (!response.ok) {
-        console.log(!response.ok);
+        Swal.fire({
+          title: "Error!",
+          text: "Email or password are wrong",
+          icon: "error",
+          confirmButtonText: "Cool",
+        });
       } else {
         window.location.href = "/";
       }
