@@ -1,7 +1,32 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Register } from "../../Api/authApi";
 import Swal from "sweetalert2";
 function register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      await Register(name, email, password, role);
+      Swal.fire({
+        title: "Success!",
+        text: "Register successful",
+        icon: "success",
+      }).then(() => {
+        window.location.href = "/login";
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "something went wrong",
+        icon: "error",
+      });
+    }
+  };
   return (
     <React.Fragment>
       <div className="flex flex-col items-center justify-center px-3 py-3 my-7">
@@ -16,7 +41,7 @@ function register() {
             <h1 className="text-4xl text-purple-400 font-bold">
               Creat Your Account
             </h1>
-            <form>
+            <form onSubmit={submit}>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
                   name
@@ -26,6 +51,7 @@ function register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Your Name"
                   required
+                  onChange={(e) => setName(e.target.name)}
                 />
               </div>
               <div>
@@ -37,6 +63,7 @@ function register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="name@Example.com"
                   required
+                  onChange={(e) => setEmail(e.target.email)}
                 />
               </div>
               <div>
@@ -48,6 +75,7 @@ function register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Password"
                   required
+                  onChange={(e) => setPassword(e.target.password)}
                 />
               </div>
               <div>
@@ -59,17 +87,19 @@ function register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="role"
                   required
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
                 >
-                  <option>Select option</option>
+                  <option value="">Select option</option>
                   <option value="client">client</option>
-                  <option value="client">Livreur</option>
+                  <option value="Livreur">Livreur</option>
                 </select>
               </div>
               <button
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 my-5 rounded-full"
               >
-                Login
+                Register
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account
