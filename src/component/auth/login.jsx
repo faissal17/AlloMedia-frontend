@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Login } from "../../Api/authApi";
 import Swal from "sweetalert2";
 function login() {
   const [email, setEmail] = useState("");
@@ -8,27 +9,23 @@ function login() {
   const submit = async (e) => {
     console.log("isaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam");
     e.preventDefault();
-    await fetch("http://localhost:3000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    }).then(function (response) {
-      if (!response.ok) {
-        Swal.fire({
-          title: "Error!",
-          text: "Email or password are wrong",
-          icon: "error",
-          confirmButtonText: "Cool",
-        });
-      } else {
+    try {
+      await Login(email, password);
+
+      Swal.fire({
+        title: "Success!",
+        text: "Login successful",
+        icon: "success",
+      }).then(() => {
         window.location.href = "/";
-      }
-    });
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Email or password are wrong",
+        icon: "error",
+      });
+    }
   };
   return (
     <React.Fragment>
