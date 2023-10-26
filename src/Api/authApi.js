@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const api = axios.create({
   baseURL: "http://localhost:3000/api/auth",
@@ -31,10 +32,9 @@ export const Register = async (name, email, password, role) => {
       password: password,
       role: role,
     });
-
     if (response.status === 201) {
       const token = response.data.token;
-      localStorage.setItem("token", token);
+      Cookies.set("token", token);
     } else {
       throw new Error("Register failed");
     }

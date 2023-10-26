@@ -12,7 +12,7 @@ function forgetPassword() {
       await ForgetPassword(email);
       Swal.fire({
         text: "please check your email",
-        icon: "success",
+        icon: "question",
       });
     } catch (error) {
       Swal.fire({
