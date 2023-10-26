@@ -14,10 +14,9 @@ function login() {
         title: "Success!",
         text: "Login successful",
         icon: "success",
+      }).then(() => {
+        window.location.href = "/";
       });
-      // .then(() => {
-      //   window.location.href = "/";
-      // });
     } catch (error) {
       Swal.fire({
         title: "Error!",

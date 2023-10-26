@@ -22,6 +22,7 @@ export const Login = async (email, password) => {
     throw error;
   }
 };
+
 export const Register = async (name, email, password, role) => {
   try {
     const response = await api.post("/register", {
@@ -39,6 +40,23 @@ export const Register = async (name, email, password, role) => {
     }
   } catch (error) {
     console.error("Error in Register:", error);
+    throw error;
+  }
+};
+
+export const ForgetPassword = async (email, password) => {
+  try {
+    const response = await api.post("/forgetpassword", {
+      email: email,
+    });
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Login failed");
+    }
+  } catch (error) {
+    console.error("Error logging in:", error);
     throw error;
   }
 };
