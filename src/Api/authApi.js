@@ -24,20 +24,12 @@ export const Login = async (email, password) => {
 };
 export const Register = async (name, email, password, role) => {
   try {
-    const response = await api.post(
-      "/register",
-      {
-        name: name,
-        email: email,
-        password: password,
-        role: role,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await api.post("/register", {
+      name: name,
+      email: email,
+      password: password,
+      role: role,
+    });
 
     if (response.status === 201) {
       return response.data;

@@ -7,11 +7,9 @@ function login() {
   const [password, setPassword] = useState("");
 
   const submit = async (e) => {
-    console.log("isaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaam");
     e.preventDefault();
     try {
       await Login(email, password);
-
       Swal.fire({
         title: "Success!",
         text: "Login successful",

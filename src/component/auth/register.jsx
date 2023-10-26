@@ -51,7 +51,8 @@ function register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Your Name"
                   required
-                  onChange={(e) => setName(e.target.name)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div>
@@ -63,7 +64,8 @@ function register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="name@Example.com"
                   required
-                  onChange={(e) => setEmail(e.target.email)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -75,7 +77,8 @@ function register() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Password"
                   required
-                  onChange={(e) => setPassword(e.target.password)}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div>
@@ -92,7 +95,7 @@ function register() {
                 >
                   <option value="">Select option</option>
                   <option value="client">client</option>
-                  <option value="Livreur">Livreur</option>
+                  <option value="livreur">livreur</option>
                 </select>
               </div>
               <button
