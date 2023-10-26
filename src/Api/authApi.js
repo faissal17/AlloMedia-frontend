@@ -32,7 +32,8 @@ export const Register = async (name, email, password, role) => {
     });
 
     if (response.status === 201) {
-      return response.data;
+      const token = response.data.token;
+      localStorage.setItem("token", token);
     } else {
       throw new Error("Register failed");
     }

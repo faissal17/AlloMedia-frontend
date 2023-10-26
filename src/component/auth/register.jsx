@@ -16,9 +16,10 @@ function register() {
         title: "Success!",
         text: "Register successful",
         icon: "success",
-      }).then(() => {
-        window.location.href = "/login";
       });
+      // .then(() => {
+      //   window.location.href = "/login";
+      // });
     } catch (error) {
       Swal.fire({
         title: "Error!",

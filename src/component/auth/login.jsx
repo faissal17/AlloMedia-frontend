@@ -14,9 +14,10 @@ function login() {
         title: "Success!",
         text: "Login successful",
         icon: "success",
-      }).then(() => {
-        window.location.href = "/";
       });
+      // .then(() => {
+      //   window.location.href = "/";
+      // });
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -77,6 +78,16 @@ function login() {
                   className="font-medium text-blue-600 hover:underline dark ml-1"
                 >
                   Register Here
+                </Link>
+              </p>
+
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400 mt-5">
+                Forget Your password?
+                <Link
+                  to="/forgetPassword"
+                  className="font-medium text-red-500 hover:underline dark ml-1"
+                >
+                  Click Here
                 </Link>
               </p>
             </form>
