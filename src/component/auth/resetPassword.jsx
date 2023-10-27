@@ -1,7 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ResetPassword } from "../../Api/authApi";
+import Swal from "sweetalert2";
 
 function resetPassword() {
+  const [token, setToken] = useState(null);
+  const [password, setPassword] = useState("");
+  const location = useLocation();
+
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      await ResetPassword(password, token);
+      Swal.fire({
+        text: "password reset successfully",
+        icon: "success",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "error!",
+        text: "Error in this operation",
+        icon: "error",
+      });
+    }
+  };
+
+  useEffect(() => {
+    let token = new URLSearchParams(location.search).get("token");
+    setToken(token);
+  }, [location]);
+
   return (
     <React.Fragment>
       <div className="flex flex-col items-center justify-center px-3 py-3 my-7">
@@ -19,7 +47,7 @@ function resetPassword() {
             <h4 className="text-md text-blue-500 font-semibold">
               please enter your new password
             </h4>
-            <form>
+            <form onSubmit={submit}>
               <div>
                 <label className="flex items-center my-2 text-lg font-medium text-gray-900 dark:text-white">
                   Password
@@ -29,6 +57,8 @@ function resetPassword() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="password"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <button
@@ -44,5 +74,4 @@ function resetPassword() {
     </React.Fragment>
   );
 }
-
 export default resetPassword;

@@ -53,12 +53,26 @@ export const ForgetPassword = async (email, password) => {
     if (response.status === 200) {
       return response.data;
     } else {
-      throw new Error("Login failed");
+      throw new Error("Error in operation");
     }
   } catch (error) {
-    console.error("Error logging in:", error);
+    console.error("Error:", error);
     throw error;
   }
 };
+export const ResetPassword = async (password, token) => {
+  try {
+    const response = await api.post(`/resetpassword?token=${token}`, {
+      password: password,
+    });
 
-export default api;
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("reset password failed");
+    }
+  } catch (error) {
+    console.error("Error while reseting the password in:", error);
+    throw error;
+  }
+};
