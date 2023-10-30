@@ -15,6 +15,8 @@ function resetPassword() {
       Swal.fire({
         text: "password reset successfully",
         icon: "success",
+      }).then(() => {
+        window.location.href = "/login";
       });
     } catch (error) {
       Swal.fire({

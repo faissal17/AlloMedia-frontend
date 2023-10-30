@@ -29,7 +29,7 @@ function forgetPassword() {
       if (!values.email) {
         errors.email = "Email is required";
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
-        errors.email = "Invalid email address";
+        errors.email = "Invalid email form";
       }
       return errors;
     },
@@ -64,7 +64,9 @@ function forgetPassword() {
                   {...formik.getFieldProps("email")}
                 />
                 {formik.touched.email && formik.errors.email ? (
-                  <div className="text-red-500">{formik.errors.email}</div>
+                  <div className="text-red-500 mt-5 font-bold text-lg">
+                    {formik.errors.email}
+                  </div>
                 ) : null}
               </div>
               <button

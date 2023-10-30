@@ -2,29 +2,45 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Login } from "../../Api/authApi";
 import Swal from "sweetalert2";
-function login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import { useFormik } from "formik";
 
-  const submit = async (e) => {
-    e.preventDefault();
-    try {
-      await Login(email, password);
-      Swal.fire({
-        title: "Success!",
-        text: "Login successful",
-        icon: "success",
-      }).then(() => {
-        window.location.href = "/";
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Email or password are wrong",
-        icon: "error",
-      });
-    }
-  };
+function login() {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        await Login(values.email, values.password);
+        Swal.fire({
+          title: "Success!",
+          text: "Login successful",
+          icon: "success",
+        }).then(() => {
+          window.location.href = "/";
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Email or password are wrong",
+          icon: "error",
+        });
+      }
+    },
+    validate: (values) => {
+      const errors = {};
+      if (!values.email) {
+        errors.email = "Email is required";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+        errors.email = "Invalid email form";
+      } else if (!values.password) {
+        errors.password = "Password is required";
+      }
+      return errors;
+    },
+  });
+
   return (
     <React.Fragment>
       <div className="flex flex-col items-center justify-center px-3 py-3 my-7">
@@ -39,7 +55,7 @@ function login() {
             <h1 className="text-4xl text-purple-400 font-bold">
               Login to your account
             </h1>
-            <form onSubmit={submit}>
+            <form onSubmit={formik.handleSubmit}>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
                   email
@@ -48,9 +64,13 @@ function login() {
                   type="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="name@Example.com"
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...formik.getFieldProps("email")}
                 />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="text-red-500 mt-5 font-bold text-lg">
+                    {formik.errors.email}
+                  </div>
+                ) : null}
               </div>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
@@ -60,9 +80,13 @@ function login() {
                   type="Password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Password"
-                  required
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...formik.getFieldProps("password")}
                 />
+                {formik.touched.password && formik.errors.password ? (
+                  <div className="text-red-500 mt-5 font-bold text-lg">
+                    {formik.errors.password}
+                  </div>
+                ) : null}
               </div>
               <button
                 type="submit"
