@@ -64,7 +64,7 @@ function forgetPassword() {
                   {...formik.getFieldProps("email")}
                 />
                 {formik.touched.email && formik.errors.email ? (
-                  <div className="text-red-500 mt-5 font-bold text-lg">
+                  <div className="text-red-500 mt-5 font-semibold text-lg">
                     {formik.errors.email}
                   </div>
                 ) : null}

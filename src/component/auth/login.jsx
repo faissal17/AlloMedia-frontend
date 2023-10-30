@@ -67,7 +67,7 @@ function login() {
                   {...formik.getFieldProps("email")}
                 />
                 {formik.touched.email && formik.errors.email ? (
-                  <div className="text-red-500 mt-5 font-bold text-lg">
+                  <div className="text-red-500 mt-5 text-lg font-semibold">
                     {formik.errors.email}
                   </div>
                 ) : null}
@@ -83,7 +83,7 @@ function login() {
                   {...formik.getFieldProps("password")}
                 />
                 {formik.touched.password && formik.errors.password ? (
-                  <div className="text-red-500 mt-5 font-bold text-lg">
+                  <div className="text-red-500 mt-5 font-semibold text-lg">
                     {formik.errors.password}
                   </div>
                 ) : null}

@@ -1,32 +1,51 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Register } from "../../Api/authApi";
+import { useFormik } from "formik";
 import Swal from "sweetalert2";
 function register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      role: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        await Register(values.name, values.email, values.password, values.role);
+        Swal.fire({
+          title: "Success!",
+          text: "Register successful",
+          icon: "success",
+        }).then(() => {
+          window.location.href = "/login";
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "something went wrong",
+          icon: "error",
+        });
+      }
+    },
+    validate: (values) => {
+      const errors = {};
+      if (!values.name) {
+        errors.name = "name is required";
+      } else if (!values.email) {
+        errors.email = "Email is required";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+        errors.email = "Invalid email form";
+      } else if (!values.password) {
+        errors.password = "password is required";
+      } else if (!values.role) {
+        errors.role = "please select a role";
+      }
+      return errors;
+    },
+  });
 
-  const submit = async (e) => {
-    e.preventDefault();
-    try {
-      await Register(name, email, password, role);
-      Swal.fire({
-        title: "Success!",
-        text: "Register successful",
-        icon: "success",
-      }).then(() => {
-        window.location.href = "/login";
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "something went wrong",
-        icon: "error",
-      });
-    }
-  };
   return (
     <React.Fragment>
       <div className="flex flex-col items-center justify-center px-3 py-3 my-7">
@@ -41,7 +60,7 @@ function register() {
             <h1 className="text-4xl text-purple-400 font-bold">
               Creat Your Account
             </h1>
-            <form onSubmit={submit}>
+            <form onSubmit={formik.handleSubmit}>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
                   name
@@ -50,10 +69,13 @@ function register() {
                   type="name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Your Name"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  {...formik.getFieldProps("name")}
                 />
+                {formik.touched.name && formik.errors.name ? (
+                  <div className="text-red-500 mt-5 text-lg font-semibold">
+                    {formik.errors.name}
+                  </div>
+                ) : null}
               </div>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
@@ -61,25 +83,31 @@ function register() {
                 </label>
                 <input
                   type="email"
+                  placeholder="name@email.com"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                  placeholder="name@Example.com"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  {...formik.getFieldProps("email")}
                 />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="text-red-500 mt-5 text-lg font-semibold">
+                    {formik.errors.email}
+                  </div>
+                ) : null}
               </div>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
                   Password
                 </label>
                 <input
-                  type="Password"
+                  type="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...formik.getFieldProps("password")}
                 />
+                {formik.touched.password && formik.errors.password ? (
+                  <div className="text-red-500 mt-5 text-lg font-semibold">
+                    {formik.errors.password}
+                  </div>
+                ) : null}
               </div>
               <div>
                 <label className="flex my-2 text-lg font-medium text-gray-900 dark:text-white">
@@ -89,10 +117,13 @@ function register() {
                   type="role"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                   placeholder="role"
-                  required
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
+                  {...formik.getFieldProps("role")}
                 >
+                  {formik.touched.role && formik.errors.role ? (
+                    <div className="text-red-500 mt-5 text-lg font-semibold">
+                      {formik.errors.role}
+                    </div>
+                  ) : null}
                   <option value="">Select option</option>
                   <option value="client">client</option>
                   <option value="livreur">livreur</option>
