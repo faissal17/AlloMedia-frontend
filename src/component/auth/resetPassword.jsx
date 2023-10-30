@@ -24,11 +24,13 @@ function resetPassword() {
       });
     }
   };
-
+  // useEffect to get the token from the URL
   useEffect(() => {
     let token = new URLSearchParams(location.search).get("token");
     setToken(token);
   }, [location]);
+
+  // formik
 
   return (
     <React.Fragment>

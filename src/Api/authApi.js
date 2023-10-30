@@ -44,7 +44,7 @@ export const Register = async (name, email, password, role) => {
   }
 };
 
-export const ForgetPassword = async (email, password) => {
+export const ForgetPassword = async (email) => {
   try {
     const response = await api.post("/forgetpassword", {
       email: email,
@@ -73,6 +73,20 @@ export const ResetPassword = async (password, token) => {
     }
   } catch (error) {
     console.error("Error while reseting the password in:", error);
+    throw error;
+  }
+};
+export const ActivatEmail = async (email, token) => {
+  try {
+    const response = await api.post(`/activeEmail?token=${token}`);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error("Eamil activation failed");
+    }
+  } catch (error) {
+    console.error("Error while activating the email in:", error);
     throw error;
   }
 };
