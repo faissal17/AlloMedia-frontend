@@ -14,7 +14,6 @@ before start with AlloMedia you need some requirement
 - Node.js and npm installed on your machine.
 - Git installed on your machine.
 
-
 # Getting started
 
 1. To get a local copy up and running, follow these simple steps.
