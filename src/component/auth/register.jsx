@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Register } from "../../Api/authApi";
 import { useFormik } from "formik";
@@ -16,10 +16,8 @@ function register() {
         await Register(values.name, values.email, values.password, values.role);
         Swal.fire({
           title: "Success!",
-          text: "Register successful",
-          icon: "success",
-        }).then(() => {
-          window.location.href = "/login";
+          text: "Register successful,Please check your email to validate your account",
+          icon: "question",
         });
       } catch (error) {
         Swal.fire({

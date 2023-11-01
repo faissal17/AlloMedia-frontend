@@ -1,6 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ActivatEmail } from "../../Api/authApi";
 function activatEmail() {
+  const [token, setToken] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    let token = new URLSearchParams(location.search).get("token");
+    setToken(token);
+    if (token) {
+      ActivateUserEmail(token);
+    }
+  }, [location]);
+  
   return (
     <React.Fragment>
       <div>
