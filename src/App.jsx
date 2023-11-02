@@ -6,6 +6,7 @@ import register from "./component/auth/register";
 import forgetPassword from "./component/auth/forgetPassword";
 import resetPassword from "./component/auth/resetPassword";
 import activatEmail from "./component/auth/activatEmail";
+import Client from "./users/client";
 import "./App.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/forgetPassword" Component={forgetPassword} />
           <Route path="/resetPassword" Component={resetPassword} />
           <Route path="/ActiveEmail" Component={activatEmail} />
+          <Route path="/me/client" Component={Client} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>

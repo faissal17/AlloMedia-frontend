@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ResetPassword } from "../../Api/authApi";
 import Swal from "sweetalert2";
 
 function resetPassword() {
+  navigate = useNavigate();
   const [token, setToken] = useState(null);
   const [password, setPassword] = useState("");
   const location = useLocation();
@@ -16,7 +17,7 @@ function resetPassword() {
         text: "password reset successfully",
         icon: "success",
       }).then(() => {
-        window.location.href = "/login";
+        navigate("/login");
       });
     } catch (error) {
       Swal.fire({

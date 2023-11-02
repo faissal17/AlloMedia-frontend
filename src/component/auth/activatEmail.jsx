@@ -3,16 +3,24 @@ import { Link, useLocation } from "react-router-dom";
 import { ActivatEmail } from "../../Api/authApi";
 function activatEmail() {
   const [token, setToken] = useState(null);
+  const [email, setEmail] = useState("");
   const location = useLocation();
 
   useEffect(() => {
     let token = new URLSearchParams(location.search).get("token");
-    setToken(token);
+    // setToken(token);
     if (token) {
       ActivateUserEmail(token);
     }
   }, [location]);
-  
+
+  const ActivateUserEmail = async (token) => {
+    try {
+      await ActivatEmail(email, token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <React.Fragment>
       <div>

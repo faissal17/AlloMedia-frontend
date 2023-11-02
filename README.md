@@ -33,3 +33,4 @@ cd AlloMedia-frontend
 ```bash
 npm install
 ```
+

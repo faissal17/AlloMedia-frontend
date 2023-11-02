@@ -78,12 +78,14 @@ export const ResetPassword = async (password, token) => {
 };
 export const ActivatEmail = async (email, token) => {
   try {
-    const response = await api.post(`/activeEmail?token=${token}`);
+    const response = await api.post(`/activeEmail?token=${token}`, {
+      email: email,
+    });
 
     if (response.status === 200) {
       return response.data;
     } else {
-      throw new Error("Eamil activation failed");
+      throw new Error("Email activation failed");
     }
   } catch (error) {
     console.error("Error while activating the email in:", error);

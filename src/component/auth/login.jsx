@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../../Api/authApi";
 import Swal from "sweetalert2";
 import { useFormik } from "formik";
 
 function login() {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,7 +20,7 @@ function login() {
           text: "Login successful",
           icon: "success",
         }).then(() => {
-          window.location.href = "/";
+          navigate("/");
         });
       } catch (error) {
         Swal.fire({
